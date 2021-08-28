@@ -65,15 +65,19 @@ name: 'Login',
     }
  },
 
- created () {
-     this.ActionSetUser({ name: 'Ikaro Montanari', email: 'ikaro.montanari@gmail.com' })
- },
 
 
  methods:{
-    ... mapActions('auth', ['ActionSetUser']),
-    submit() {
-        console.log(this.form)
+    ... mapActions('auth', ['ActionDoLogin']),
+    async submit() {
+        try {
+            await this.ActionDoLogin(this.form)
+            // this.$router.push({ name: 'Home'})
+            console.log("Login efetuado com sucesso")
+        }catch (err) {
+            console.log(err)
+            alert(err.data.error ? err.data.message : "Não foi possível fazer login, verifique seu email e senha")
+        }
     }
   },
 
@@ -129,6 +133,7 @@ margin-top: 10%;
 background: #FFFFFF;
 border-radius: 5px; 
 width: 80vw;
+transition: .4s;
 /* height: 600px; */
 }
 .login-title{
