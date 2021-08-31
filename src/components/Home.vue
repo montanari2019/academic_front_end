@@ -128,7 +128,7 @@
     <main class="main-container-footer">
       <section>
         <h1 class="main-title-galeria">Está esperando oque?</h1>
-        <p class="main-sub-title-galeria">Venha crescer junto com a gente</p>
+        <p class="main-sub-title-galeria">Viva o extraordinário ! </p>
       </section>
        <div class="d-grid gap-2">
             <button type="submit" class="button-footer btn btn-outline-dark">Torne-se um associado</button>

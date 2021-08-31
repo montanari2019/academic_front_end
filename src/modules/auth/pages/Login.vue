@@ -6,7 +6,7 @@
         <h6 class="sub-titles02">Associação dos Acadêmicos de</h6>
         <h6 class="title02">Chupinguaia</h6>  
 
-        <div class="card-login">
+        <form class="card-login">
             <!-- <p class="fs-6 fw-light text-start login login-title">Login</p> -->
 
             <div>
@@ -28,11 +28,12 @@
             </div>
 
            <div class="d-grid gap-2 m-3">
-                 <button class="btn btn-success btn-login" type="button" v-on:click="submit()">Login</button>
-                 <router-link class="router-link" to="/">Esqueci minha senha</router-link>
-        </div>
+                 <button class="btn btn-success btn-login" type="submit" v-on:click="submit()">Login</button>
+                 <router-link class="router-link" to="">Esqueci minha senha</router-link>
+                 
+            </div>
             
-        </div>
+        </form>
  
         <div>
             <h6 class="sub-title-footer m-5">Created and developed by Ikaro Bruno da Mata Montanari</h6>
@@ -49,6 +50,7 @@
 <script>
 
 import { mapActions } from 'vuex'
+// import store from '../../../store/store'
 import "bootstrap/dist/css/bootstrap.css"
 
 
@@ -72,8 +74,10 @@ name: 'Login',
     async submit() {
         try {
             await this.ActionDoLogin(this.form)
-            // this.$router.push({ name: 'Home'})
-            console.log("Login efetuado com sucesso")
+            this.$router.push({ name: 'User'})
+            // console.log(store.state)
+
+            
         }catch (err) {
             console.log(err)
             alert(err.data.error ? err.data.message : "Não foi possível fazer login, verifique seu email e senha")
