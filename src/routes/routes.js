@@ -1,23 +1,36 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router'
+import BeforeEach from './beforeEach'
 
-
-import Login from '../components/Login.vue';
-import Home from '../components/Home.vue';
 
 Vue.use(VueRouter)
 
 const router = new VueRouter({
     routes: [
         {
+            name: 'Home',
             path: '/',
-            component: Home,
+            component: () => import('../components/Home'),
+            // a meta field
+            meta: { requiresAuth: false }
         },
         {
+            name: 'Login',
             path: '/login',
-            component: Login,
+            component: ()  => import('../modules/auth/pages/Login'),
+            // a meta field
+            meta: { requiresAuth: false }
+        },
+        {
+            name: 'User',
+            path: '/user',
+            component: () => import('../modules/users/pages/User'),
+            // a meta field
+            meta: { requiresAuth: true }
         }
-    ]
+    ],
 })
+
+router.beforeEach(BeforeEach)
 
 export default router
