@@ -33,19 +33,34 @@
         </nav>
       </div>
     </header>
-  <h1>IKARO</h1>
+
+    <main>
+      <section>
+        <div class="imagen-user">
+          
+        </div>
+      </section>
+    </main>
+
   </div>
 </template>
 
 <script>
 import { mapActions } from "vuex";
+import { mapState } from "vuex";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.js";
 
 export default {
   name: "App",
+  computed: {
+    ...mapState('auth', ['user']),
+    ...mapState('auth', ['contrato'])
+
+  },
   methods: {
     ...mapActions("auth", ["ActionLogout"]),
+    ...mapActions("auth", ["ActionContratoUser"]),
     async routeLogout() {
       try {
         await this.ActionLogout();
@@ -54,7 +69,13 @@ export default {
         console.log(err);
       }
     },
+    async getContrato(){
+      await this.ActionContratoUser()
+    }
   },
+  created (){
+    this.getContrato()
+  }
 };
 </script>
 
@@ -66,5 +87,13 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+.imagen-user{
+  background-image: url('https://controledeacademicos.s3.amazonaws.com/3b6edffb72896b32a59ed2c120679f0d-IMG_20180716_112759_837.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 50vw;
+  height: 50vh;
+  
 }
 </style>
