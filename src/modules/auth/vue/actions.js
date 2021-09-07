@@ -7,7 +7,7 @@ import services from '../../../http/http'
 export const ActionDoLogin = ( {dispatch} , payload) => { 
     return services.auth.login(payload).then(res => {
         console.log('ActionDoLogin ativada  ')
-        console.log(res.data)
+        // console.log(res.data)
         dispatch('ActionSetUser', res.data.user)
         dispatch('ActionToken', res.data.token)
         // dispatch('ActionLoadSession')
@@ -59,6 +59,7 @@ export const ActionLoadSession = ({ dispatch }) => {
         }
     })
 }
+
 
 export const ActionContratoUser = ({ dispatch }) => {
     console.log('ActionContratoUser ativada')
