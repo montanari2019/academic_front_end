@@ -272,8 +272,7 @@ export default {
   max-width: 400px;
   max-height: 400px;
   border-radius: 50%;
-  margin: 1%;
-  /* top: 433px; */
+  margin: 1%
 }
 
 .title-foto{

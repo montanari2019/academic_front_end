@@ -27,6 +27,20 @@ const router = new VueRouter({
             component: () => import('../modules/users/pages/User'),
             // a meta field
             meta: { requiresAuth: true }
+        },
+        {
+            name: 'AdminHome',
+            path: '/admin/Home',
+            component: () => import('../modules/admin/pages/AdminHome'),
+            // a meta field
+            meta: { requiresAuth: true }
+        },
+        {
+            name: 'Contrato',
+            path: '/contrato',
+            component: () => import('../modules/contrato/pages/Contrato'),
+            // a meta field
+            meta: { requiresAuth: false }
         }
     ],
 })

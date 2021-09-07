@@ -7,6 +7,7 @@ import services from '../../../http/http'
 export const ActionDoLogin = ( {dispatch} , payload) => { 
     return services.auth.login(payload).then(res => {
         console.log('ActionDoLogin ativada  ')
+        // console.log(res.data)
         dispatch('ActionSetUser', res.data.user)
         dispatch('ActionToken', res.data.token)
         // dispatch('ActionLoadSession')
@@ -35,6 +36,8 @@ export const ActionCheckToken =  ({ dispatch, state }) => {
 
     console.log('Token salvo no state e chamando LoadSession')
 
+    
+    
     return dispatch('ActionLoadSession')
 
 }
@@ -44,7 +47,8 @@ export const ActionLoadSession = ({ dispatch }) => {
     // eslint-disable-next-line no-async-promise-executor
     return new Promise(async (resolve, reject) => {
         try {
-            const { data: { user }} = await services.auth.loadSession()
+            const { body: { user }} = await services.auth.loadSession()
+            // console.log(user)
             dispatch('ActionSetUser', user)
             resolve()
 
@@ -54,6 +58,31 @@ export const ActionLoadSession = ({ dispatch }) => {
             reject(err)
         }
     })
+}
+
+
+export const ActionContratoUser = ({ dispatch }) => {
+    console.log('ActionContratoUser ativada')
+    // eslint-disable-next-line no-async-promise-executor
+    return new Promise(async (resolve, reject) => {
+        try {
+            const { body: {contratos} } = await services.auth.contratoUser()
+            // console.log(contratos.[0])
+            dispatch('ActionSetContratoUser', contratos.[0])
+            resolve()
+
+        }catch (err) {  
+            console.log(err)
+            dispatch('ActionLogout')
+            reject(err)
+        }
+    })
+}
+
+export const ActionSetContratoUser = ({ commit }, payload) => {
+    console.log("ActionSetContratoUser ativada")
+    commit(types.SET_CONTRATO_USER, payload)
+    
 }
 
 export const ActionSetUser = ({ commit }, payload) => {

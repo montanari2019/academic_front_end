@@ -6,5 +6,12 @@ export default {
     },
     [types.SET_TOKEN] (state, payload) {
         state.token = payload
+    },
+    [types.SET_CONTRATO_USER] (state, payload) {
+        state.contrato = payload
+    },
+    
+    [types.SET_FACULDADE_USER] (state, payload) {
+        state.faculdade = payload
     }
 }
