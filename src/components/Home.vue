@@ -16,7 +16,7 @@
           <p class="paragrafo-02">Sonhe - Acredite - Realize</p>
 
         <div class="d-grid gap-2">
-            <button type="submit" class="button-menu btn btn-outline-light">Torne-se um associado</button>
+            <button type="submit" v-on:click="routeCadastroUser()" class="button-menu btn btn-outline-light">Torne-se um associado</button>
         </div>
           
         </div>
@@ -131,7 +131,7 @@
         <p class="main-sub-title-galeria">Viva o extraordinário ! </p>
       </section>
        <div class="d-grid gap-2">
-            <button type="submit" class="button-footer btn btn-outline-dark">Torne-se um associado</button>
+            <button type="submit" v-on:click="routeCadastroUser()" class="button-footer btn btn-outline-dark">Torne-se um associado</button>
         </div>
     </main>
 
@@ -161,6 +161,9 @@ export default {
   methods:{
     routeLogin(){
       this.$router.push('/login')
+    },
+    routeCadastroUser(){
+      this.$router.push('/cadastroUser')
     }
   },
 
