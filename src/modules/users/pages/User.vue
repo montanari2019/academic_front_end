@@ -176,7 +176,7 @@ export default {
       await this.ActionContratoUser();
       // console.log(this.contrato);
       // Verificando a existencia do contrato
-      if (this.contrato == undefined) {
+      if (this.contrato == undefined && this.user.admin == false) {
         const confirmation = confirm(
           "Seu contrato não existe por favor realizar contrato para prosseguir"
         );
