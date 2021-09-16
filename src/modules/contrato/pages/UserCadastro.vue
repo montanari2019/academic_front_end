@@ -19,12 +19,12 @@
       <form class="row g-3 needs-validation">
 
         
-        <div class="col-md-6">
+        <div class="col-md-12">
           <label for="inputAddress2" class="form-label">Nome</label>
           <input type="text" v-model="nome" class="form-control"  placeholder="Nome" required />
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-12">
           <label for="inputEmail4" class="form-label">Email</label>
           <input
             type="email"
@@ -40,7 +40,7 @@
           <input
             type="password"
             class="form-control"
-            placeholder="Password"
+            placeholder="Sua senha"
             v-model="password"
             required
           />
@@ -54,6 +54,7 @@
             class="form-control"
             placeholder="Confirme sua senha"
             v-model="confirmPassword"
+            @change="passwordVerification()"
             required
           />
         </div>
@@ -73,7 +74,7 @@
           <input type="text" class="form-control" required placeholder="Telefone" v-model="telefone"/>
         </div>
 
-        <div class="col-md-6">
+        <!-- <div class="col-md-6">
           <label for="inputState" class="form-label">Faculdade</label>
           <select class="form-select" v-model="faculdade" required>
             <option>...</option>
@@ -82,14 +83,18 @@
             <option>...</option>
             <option>...</option>
           </select>
-        </div>
+        </div> -->
 
-        <div class="">
+        <div class="col-md-6">
           <label for="inputState" class="form-label"
             >Escolha uma foto para seu perfil: Max 2MB</label
           >
           <input type="file"  class="form-control" ref="file" @change="selectFile()"  />
         </div>
+
+
+
+        <!-- Dados do endereço -->
 
         <h6 class="fs-3 fw-light text-center p-5">Dados do endereço</h6>
 
@@ -194,7 +199,7 @@ export default {
         numero: '',
         estado: '',
         cidade: '',
-        faculdade:'',
+
     };
   },
   methods: {
@@ -217,6 +222,31 @@ export default {
       }
       
     },
+    passwordVerification() {
+      if(this.password != this.confirmPassword){
+        alert("Suas senhas não são iguais")
+        this.password = ''
+        this.confirmPassword = ''
+      }
+    },
+
+    postUser(){
+      const forms = {
+        nome: this.nome,
+        email:this.email,
+        password_hash: this.confirmPassword,
+        r_g:this.r_g,
+        c_p_f: this.c_p_f,
+        telefone: this.telefone,
+        cep:this.cep,
+        endereco:this.endereco,
+        bairro:this.bairro,
+        numero: this.numero,
+        estado: this.estado,
+        cidade: this.cidade,
+      }
+      console.log("forms post", forms);
+    }
   },  
 };
 </script>
