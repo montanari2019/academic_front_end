@@ -59,17 +59,17 @@
           />
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-4">
           <label for="inputAddress" class="form-label">RG:</label>
           <input type="text" class="form-control" placeholder="RG" required v-model="r_g" />
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-4">
           <label for="inputAddress2" class="form-label">CPF: </label>
           <input type="text" class="form-control" placeholder="CPF" required v-model="c_p_f"/>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-4">
           <label for="inputCity" class="form-label">Telefone</label>
           <input type="text" class="form-control" required placeholder="Telefone" v-model="telefone"/>
         </div>
@@ -84,15 +84,6 @@
             <option>...</option>
           </select>
         </div> -->
-
-        <div class="col-md-6">
-          <label for="inputState" class="form-label"
-            >Escolha uma foto para seu perfil: Max 2MB</label
-          >
-          <input type="file"  class="form-control" ref="file" @change="selectFile()"  />
-        </div>
-
-
 
         <!-- Dados do endereço -->
 
@@ -161,7 +152,7 @@
         
 
         <div class="btn-cadastro">
-          <button type="submit" @click="consoleForm()" class="btn btn-success">
+          <button type="submit" @click="postUser()" class="btn btn-success">
             Concluir Cadastro
           </button>
         </div>
@@ -185,7 +176,6 @@ export default {
   },
   data() {
     return {
-      file: {},
         nome: '',
         email:'',
         password:'',
@@ -230,11 +220,12 @@ export default {
       }
     },
 
-    postUser(){
+     async postUser(){
       const forms = {
         nome: this.nome,
         email:this.email,
-        password_hash: this.confirmPassword,
+        password: this.confirmPassword,
+        admin: false,
         r_g:this.r_g,
         c_p_f: this.c_p_f,
         telefone: this.telefone,
@@ -242,10 +233,28 @@ export default {
         endereco:this.endereco,
         bairro:this.bairro,
         numero: this.numero,
-        estado: this.estado,
         cidade: this.cidade,
+        estado: this.estado,
+        id_associacao: 1
       }
-      console.log("forms post", forms);
+
+      const options = {
+        method: 'POST',
+        body: JSON.stringify(forms),
+        headers: {  
+            'Content-Type': 'application/json'
+        }
+      }
+
+      return await fetch(`https://api-academic-control-v2.herokuapp.com/userStore`, options)
+          .then(res => res.json())
+          .then(() =>{
+            this.routeContrato()
+          }) 
+          .catch(erro => console.log(erro))
+
+
+      // console.log("forms post", forms);
     }
   },  
 };
