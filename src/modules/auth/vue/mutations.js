@@ -12,6 +12,6 @@ export default {
     },
     
     [types.SET_FACULDADE_USER] (state, payload) {
-        state.faculdade = payload
+        state.faculdades = payload
     }
 }

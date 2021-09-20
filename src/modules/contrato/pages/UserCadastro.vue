@@ -17,11 +17,15 @@
       <h6 class="fs-3 fw-light text-center m-5">Formulário de Ingressão</h6>
 
       <form class="row g-3 needs-validation">
-
-        
         <div class="col-md-12">
           <label for="inputAddress2" class="form-label">Nome</label>
-          <input type="text" v-model="nome" class="form-control"  placeholder="Nome" required />
+          <input
+            type="text"
+            v-model="nome"
+            class="form-control"
+            placeholder="Nome"
+            required
+          />
         </div>
 
         <div class="col-md-12">
@@ -61,17 +65,35 @@
 
         <div class="col-md-4">
           <label for="inputAddress" class="form-label">RG:</label>
-          <input type="text" class="form-control" placeholder="RG" required v-model="r_g" />
+          <input
+            type="text"
+            class="form-control"
+            placeholder="RG"
+            required
+            v-model="r_g"
+          />
         </div>
 
         <div class="col-md-4">
           <label for="inputAddress2" class="form-label">CPF: </label>
-          <input type="text" class="form-control" placeholder="CPF" required v-model="c_p_f"/>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="CPF"
+            required
+            v-model="c_p_f"
+          />
         </div>
 
         <div class="col-md-4">
           <label for="inputCity" class="form-label">Telefone</label>
-          <input type="text" class="form-control" required placeholder="Telefone" v-model="telefone"/>
+          <input
+            type="text"
+            class="form-control"
+            required
+            placeholder="Telefone"
+            v-model="telefone"
+          />
         </div>
 
         <!-- <div class="col-md-6">
@@ -91,7 +113,13 @@
 
         <div class="col-md-2">
           <label for="inputZip" class="form-label">Cep</label>
-          <input type="text" class="form-control" placeholder="Cep" required  v-model="cep"/>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Cep"
+            required
+            v-model="cep"
+          />
         </div>
 
         <div class="col-md-10">
@@ -149,8 +177,6 @@
           />
         </div>
 
-        
-
         <div class="btn-cadastro">
           <button type="submit" @click="postUser()" class="btn btn-success">
             Concluir Cadastro
@@ -169,94 +195,99 @@ import "bootstrap/dist/js/bootstrap.js";
 import Footer from "../../../components/Footer.vue";
 
 export default {
-  name: "UserContrato",
+  name: "UserCadastro",
   components: {
     // eslint-disable-next-line vue/no-unused-components
     Footer,
   },
   data() {
     return {
-        nome: '',
-        email:'',
-        password:'',
-        confirmPassword:'',
-        r_g:'',
-        c_p_f:'',
-        telefone: '',
-        cep:'',
-        endereco:'',
-        bairro:'',
-        numero: '',
-        estado: '',
-        cidade: '',
-
+      nome: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      r_g: "",
+      c_p_f: "",
+      telefone: "",
+      cep: "",
+      endereco: "",
+      bairro: "",
+      numero: "",
+      estado: "",
+      cidade: "",
     };
   },
   methods: {
     routeHome() {
       this.$router.push("/");
     },
-    routeContrato() {
-      this.$router.push("/contrato");
+    routeLogin() {
+      this.$router.push("/login");
     },
     selectFile() {
-      const sizelimit= 4 * 1024 * 1024
-      const file = this.$refs.file.files[0]
-      if(file.size > sizelimit) {
-        alert("Sua imagen não pode passar de 2 Mb")
+      const sizelimit = 4 * 1024 * 1024;
+      const file = this.$refs.file.files[0];
+      if (file.size > sizelimit) {
+        alert("Sua imagen não pode passar de 2 Mb");
         // location.reload(true);
-      }else{
-        this.file = file
+      } else {
+        this.file = file;
         console.log(this.file);
         console.log("Limite para imagen", sizelimit);
       }
-      
     },
     passwordVerification() {
-      if(this.password != this.confirmPassword){
-        alert("Suas senhas não são iguais")
-        this.password = ''
-        this.confirmPassword = ''
+      if (this.password != this.confirmPassword) {
+        alert("Suas senhas não são iguais");
+        this.password = "";
+        this.confirmPassword = "";
       }
     },
 
-     async postUser(){
+    validation() {
+      
+    },
+
+    async postUser() {
       const forms = {
         nome: this.nome,
-        email:this.email,
+        email: this.email,
         password: this.confirmPassword,
         admin: false,
-        r_g:this.r_g,
+        r_g: this.r_g,
         c_p_f: this.c_p_f,
         telefone: this.telefone,
-        cep:this.cep,
-        endereco:this.endereco,
-        bairro:this.bairro,
+        cep: this.cep,
+        endereco: this.endereco,
+        bairro: this.bairro,
         numero: this.numero,
         cidade: this.cidade,
         estado: this.estado,
-        id_associacao: 1
-      }
+        id_associacao: 1,
+      };
 
       const options = {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify(forms),
-        headers: {  
-            'Content-Type': 'application/json'
-        }
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      if (!this.nome) {
+        alert("Por favor preencher os campos");
+      } else {
+        return await fetch(`https://api-academic-control-v2.herokuapp.com/userStore`, options)
+          .then((res) => res.json())
+          .then(() => {
+            this.routeLogin();
+          })
+          .catch((erro) => console.log(erro));
       }
 
-      return await fetch(`https://api-academic-control-v2.herokuapp.com/userStore`, options)
-          .then(res => res.json())
-          .then(() =>{
-            this.routeContrato()
-          }) 
-          .catch(erro => console.log(erro))
-
-
       // console.log("forms post", forms);
-    }
-  },  
+    },
+  },
 };
 </script>
 
