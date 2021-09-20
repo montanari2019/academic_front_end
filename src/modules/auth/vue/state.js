@@ -1,6 +1,6 @@
 export default {
     user: {},
     contrato: {},
-    faculdade: {},
+    faculdades: {},
     token: ''
 }

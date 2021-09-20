@@ -3,8 +3,7 @@ import store from "../store/store";
 export default async (to, from, next) => {
   await store.dispatch("auth/ActionCheckToken");
   document.title = `${to.name} - Academic Control`;
-  // eslint-disable-next-line no-debugger
-//   debugger;
+
 
   const logado = store.getters["auth/hasToken"];
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
