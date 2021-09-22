@@ -11,7 +11,5 @@ export default {
         state.contrato = payload
     },
     
-    [types.SET_FACULDADE_USER] (state, payload) {
-        state.faculdades = payload
-    }
+
 }
