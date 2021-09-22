@@ -60,28 +60,6 @@ export const ActionLoadSession = ({ dispatch }) => {
     })
 }
 
-export const ActionGetFaculdades = ({ dispatch }) => {
-    console.log('Action Get Faculdades ativada  ')
-    // eslint-disable-next-line no-async-promise-executor
-    return new Promise(async (resolve, reject) => {
-        try {
-            const faculdades = await services.auth.faculdadesUser()
-            // console.log(user)
-            dispatch('ActionSetFaculdades', faculdades)
-            resolve()
-
-        }catch (err) {  
-            console.log(err)
-            dispatch('ActionLogout')
-            reject(err)
-        }
-    })
-}
-export const ActionSetFaculdades = ({ commit }, payload) => {
-    console.log("ActionSetFaculdades ativada")
-    commit(types.SET_FACULDADE_USER, payload)
-    
-}
 
 export const ActionContratoUser = ({ dispatch }) => {
     console.log('ActionContratoUser ativada')
