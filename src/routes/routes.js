@@ -40,7 +40,7 @@ const router = new VueRouter({
             path: '/contrato',
             component: () => import('../modules/contrato/pages/Contrato'),
             // a meta field
-            meta: { requiresAuth: false }
+            meta: { requiresAuth: true }
         },
         {
             name: 'CadastroUser',

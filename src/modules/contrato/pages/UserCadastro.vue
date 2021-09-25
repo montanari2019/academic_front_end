@@ -280,7 +280,8 @@ export default {
         return await fetch(`https://api-academic-control-v2.herokuapp.com/userStore`, options)
           .then((res) => res.json())
           .then(() => {
-            this.routeLogin();
+            alert("Seu cadastro foi efetuado com sucesso, agora você ja pode fazer login e conhecer mais")
+            this.routeHome();
           })
           .catch((erro) => console.log(erro));
       }
