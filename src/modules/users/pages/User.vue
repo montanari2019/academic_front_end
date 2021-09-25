@@ -22,7 +22,9 @@
                   <a class="nav-link" v-on:click="homepage()">Home</a>
                 </li>
                 <li class="nav-item button-menu">
-                  <a class="nav-link" v-on:click="routeAdmin()">Area do Administrador</a>
+                  <a class="nav-link" v-on:click="routeAdmin()"
+                    >Area do Administrador</a
+                  >
                 </li>
                 <li class="nav-item button-menu">
                   <a class="nav-link" v-on:click="routeLogout()">Sair</a>
@@ -39,6 +41,25 @@
       <section class="container-section">
         <div>
           <img :src="user.foto_url" class="imagen-user" />
+        </div>
+        <div>
+          <!-- <button type="button" class="btn btn-outline-warning btn-sm">Alterar foto</button> -->
+          <div class="input-group mb-2">
+            <input
+              type="file"
+              class="form-control"
+              id="inputGroupFile04"
+              aria-describedby="inputGroupFileAddon04"
+              aria-label="Upload"
+            />
+            <button
+              class="btn btn-outline-warning"
+              type="button"
+              id="inputGroupFileAddon04"
+            >
+              Upload
+            </button>
+          </div>
         </div>
         <div class="text-center mt-3">
           <p>Nome</p>
@@ -121,8 +142,6 @@
             <button class="btn btn-primary">Imprimir</button>
           </div>
         </div>
-
-        
       </section>
     </main>
 
@@ -144,9 +163,10 @@ import { mapActions } from "vuex";
 import { mapState } from "vuex";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.js";
+import "font-awesome/css/font-awesome.css";
 
 export default {
-  name: "App",
+  name: "User",
   data() {
     return {};
   },
@@ -166,11 +186,15 @@ export default {
       }
     },
     async routeAdmin() {
-      if(this.user.admin == true) {
+      if (this.user.admin == true) {
         this.$router.push({ name: "AdminHome" });
-      }else {
-        alert("Você não é um administrador")
+      } else {
+        alert("Você não é um administrador");
       }
+    },
+
+    async homepage() {
+      this.$router.push({ name: "Home" });
     },
     async getContrato() {
       await this.ActionContratoUser();
@@ -250,7 +274,6 @@ export default {
   text-align: center;
 }
 
-
 /* Responsivade*/
 @media (min-width: 999px) {
   .button-footer {
@@ -267,18 +290,18 @@ export default {
     font-size: 30px;
   }
   .container-boletos {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
   }
   .boletos-margin {
     margin-left: 2%;
     margin-right: 2%;
   }
-  .background-menu{
-      padding-top: 1%;
-  padding-bottom: 1%;
+  .background-menu {
+    padding-top: 1%;
+    padding-bottom: 1%;
   }
 }
 </style>

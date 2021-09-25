@@ -151,7 +151,7 @@ import "bootstrap/dist/js/bootstrap.js";
 import Footer from "../../../components/Footer.vue";
 
 export default {
-  name: "UserCadastro",
+  name: "Contrato",
   components: {
     // eslint-disable-next-line vue/no-unused-components
     Footer,
