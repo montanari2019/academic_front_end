@@ -12,40 +12,38 @@
           <div class="m-3">
             <button type="button" class="btn btn-warning  position-relative">
               Associados pendentes de aprovação
-              <span
-                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                99+
-                <span class="visually-hidden">unread messages</span>
-              </span>
             </button>
           </div>
 
           <div class="m-3">
             <button type="button" class="btn btn-info position-relative">
               Contratos vigentes
-              <span
-                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                {{ quantContratosVigentes.length }}
-                <span class="visually-hidden">unread messages</span>
-              </span>
             </button>
           </div>
         </div>
 
         <div>
-          <h3 class="m-3 fw-light text-ajust ">Todos os associados</h3>
+          <h2 class="m-3 fw-light text-ajust ">Todos os associados</h2>
         </div>
 
-        <div class="container-main">
-          <div class="card m-3" style="width: 30rem;" v-for="(user, id) in users" v-bind:key="id">
+        <div class="container-main card p-3">
+          <div
+            class="card m-3"
+            style="width: 30rem;"
+            v-for="(user, id) in users"
+            v-bind:key="id"
+          >
             <div class="card-body">
-              <h5 class="card-title">{{ user.nome }}</h5>
-              <h6 class="card-subtitle mb-2 text-muted">{{user.email}}</h6>
+              <h5 class="card-title">
+                {{ user.nome}}
+              </h5>
+              <h6 class="card-subtitle mb-2 text-muted">{{ user.email }}</h6>
               <p class="card-text">
                 {{ user.c_p_f }}
               </p>
-              <button type="button" class="btn btn-outline-primary">Ver detalhes</button>
-              
+              <button type="button" class="btn btn-outline-primary">
+                Ver detalhes
+              </button>
             </div>
           </div>
         </div>
@@ -128,11 +126,11 @@ export default {
         })
         .catch((erro) => console.log(erro));
     },
-    contratosVigentes(){
-      this.users.filter((valoratual)=>{
-         console.log("Chamei ", valoratual)
-     })
-      console.log(" Contratos ",this.contratos);
+    contratosVigentes() {
+      this.users.filter((valoratual) => {
+        console.log("Chamei ", valoratual);
+      });
+      console.log(" Contratos ", this.contratos);
     },
   },
 
@@ -158,7 +156,7 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between  ;
+  justify-content: space-between;
 }
 
 .text-ajust {
