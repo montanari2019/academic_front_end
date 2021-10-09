@@ -10,7 +10,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">
+            <h5 class="modal-title" id="">
               Descrição do cancelamento (Contrato nº {{ id_contrato }})
             </h5>
             <button
@@ -63,7 +63,7 @@ import "bootstrap/dist/js/bootstrap.js";
 import { mapState } from "vuex";
 
 export default {
-  name: "ModalListUser",
+  name: "ModalCancelamento",
   data() {
     return {
       visible: false,
@@ -80,9 +80,9 @@ export default {
   },
   methods: {
     async cancelarContrato() {
-        const forms = {
-            descricao: this.descricao
-        }
+      const forms = {
+          descricao: this.descricao
+      }
       const options = {
         method: "PUT",
         body: JSON.stringify(forms),
@@ -105,10 +105,10 @@ export default {
     },
   },
   created() {
-    this.$root.$on("open-modal", () => {
+    this.$root.$on("open-modal-cancelamento", () => {
       this.visible = true;
     });
-    console.log(this.id_contrato);
+    // console.log(this.id_contrato);
   },
 };
 </script>

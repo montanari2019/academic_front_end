@@ -65,16 +65,14 @@
           </div>
 
           <div class=" mt-5">
-            <button type="button" class="btn btn-danger  btn-block btn_ajuste" @click="$root.$emit('open-modal')">Cancelar contrato</button>
+            <button type="button" class="btn btn-danger  btn-block btn_ajuste" @click="$root.$emit('open-modal-cancelamento')">Cancelar contrato</button>
           </div>
 
           <div class=" mt-5">
             <button type="button" class="btn btn-primary  btn-block btn_ajuste" @click="homeAdmin()">Voltar a home</button>
           </div>
 
-          <ModalUserInfo :id_contrato="user.id">
-
-          </ModalUserInfo>
+          <ModalCancelamento :id_contrato="user.id"></ModalCancelamento>
 
           
 
@@ -94,7 +92,7 @@ import "bootstrap/dist/js/bootstrap.js";
 import { mapState } from "vuex";
 import Footer from "../../../components/Footer.vue";
 import NavBarAdmin from "../pages/NavBarAdmin.vue";
-import ModalUserInfo from "../pages/ModalUserInfo.vue";
+import ModalCancelamento from "../pages/ModalCancelamento.vue";
 
 export default {
   name: "AnaliseUser",
@@ -103,7 +101,7 @@ export default {
     Footer,
     NavBarAdmin,
     // eslint-disable-next-line vue/no-unused-components
-    ModalUserInfo,
+    ModalCancelamento,
   },
 
   data() {
