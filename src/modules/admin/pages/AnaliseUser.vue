@@ -52,6 +52,11 @@
               <h6>Administrador aprovação</h6>
               <p>{{ user.admin_aprovocao ? user.admin_aprovocao: "Pendente de aprovação" }} </p>
             </div>
+
+            <div class="p-2 mb-3 card card-ajust card-user">
+              <h6>Descrição do contrato</h6>
+              <p>{{ user.descricao }} </p>
+            </div>
           </div>
 
 
@@ -67,7 +72,7 @@
             <button type="button" class="btn btn-primary  btn-block btn_ajuste" @click="homeAdmin()">Voltar a home</button>
           </div>
 
-          <ModalUserInfo>
+          <ModalUserInfo :id_contrato="user.id">
 
           </ModalUserInfo>
 
@@ -177,7 +182,7 @@ export default {
   text-align: center;
 }
 .card-ajust {
-  width: 30rem;
+  width: 23rem;
 }
 .centralizer {
   display: flex;
@@ -190,7 +195,7 @@ export default {
   max-height: 200px;
 }
 .btn_ajuste{
-  width: 30rem
+  width: 23rem
 }
 
 .imagen-user {
@@ -213,7 +218,10 @@ export default {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-between;
+  }
+  .card-ajust{
+    width: 30rem;
   }
 }
 </style>
