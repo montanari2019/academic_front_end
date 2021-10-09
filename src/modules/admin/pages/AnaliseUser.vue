@@ -20,6 +20,16 @@
               <p>{{ user.user.email }}</p>
             </div>
 
+            <div class="p-2 mb-3 card card-ajust  card-user">
+              <h6>RG</h6>
+              <p>{{ user.user.r_g }}</p>
+            </div>
+
+            <div class="p-2 mb-3 card card-ajust  card-user">
+              <h6>CPF</h6>
+              <p> {{ user.user.c_p_f }}</p>
+            </div>
+
              <div class="p-2 mb-3 card card-ajust  card-user">
               <h6>Endereço</h6>
               <p>{{ user.user.endereco }} / nº {{ user.user.numero }} / CEP: {{ user.user.cep }}</p>
