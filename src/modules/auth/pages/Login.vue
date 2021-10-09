@@ -74,7 +74,7 @@ name: 'Login',
     async submit() {
         try {
             await this.ActionDoLogin(this.form)
-            this.$router.push({ name: 'User'})
+            this.$router.push('/user')
             // console.log(store.state)
 
             

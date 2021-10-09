@@ -48,6 +48,13 @@ const router = new VueRouter({
             component: () => import('../modules/contrato/pages/UserCadastro'),
             // a meta field
             meta: { requiresAuth: false }
+        },
+        {
+            name: 'AnaliseUser',
+            path: '/listUser/:id',
+            component: () => import('../modules/admin/pages/AnaliseUser'),
+            // a meta field
+            meta: { requiresAuth: true }
         }
     ],
 })

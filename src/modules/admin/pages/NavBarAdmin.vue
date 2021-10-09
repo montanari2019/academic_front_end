@@ -27,6 +27,10 @@
                   >
                 </li>
                 <li class="nav-item button-menu">
+                  <a class="nav-link" v-on:click="homeAdmin()">Home Administrador</a>
+                </li>
+                
+                <li class="nav-item button-menu">
                   <a class="nav-link" v-on:click="routeLogout()">Sair</a>
                 </li>
               </ul>
@@ -66,6 +70,10 @@ methods:{
 
     async homepage() {
       this.$router.push({ name: "Home" });
+    },
+
+    async homeAdmin() {
+      this.$router.push({ name: "AdminHome" });
     },
 },
 }
