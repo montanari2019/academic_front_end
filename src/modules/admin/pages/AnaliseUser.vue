@@ -37,7 +37,7 @@
 
             <div class="p-2 mb-3 card card-ajust card-user">
               <h6>Mensalidade</h6>
-              <p>R${{ user.mensalidade }}</p>
+              <p>R$ {{ user.mensalidade }}</p>
             </div>
 
             <div class="p-2 mb-3 card card-ajust card-user">
@@ -86,14 +86,14 @@
             </button>
           </div>
 
-          <div class=" m-2">
+          <!-- <div class=" m-2">
             <button
               type="button"
               class="btn btn-primary  btn-block btn_ajuste"
               @click="homeAdmin()">
               Voltar a home
             </button>
-          </div>
+          </div> -->
 
           <ModalCancelamento :id_contrato="user.id"></ModalCancelamento>
           </div>
