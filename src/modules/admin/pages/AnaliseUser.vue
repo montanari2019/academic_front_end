@@ -4,23 +4,25 @@
 
     <main class="container">
       <section>
-        
-          <div class="centralizer">
+        <div class="mt-5 centralizer">
+          <img :src="user.user.foto_url" class="imagen-user" />
+        </div>
 
-          <div class="mt-5">
-            <img :src="user.user.foto_url" class="imagen-user" />
-          </div>
-
-          <div class="mt-5 container-user-info card-body" >
-
+        <div class="container-main">
+          <div class="mt-5 p-3 container-user-info card">
             <div class="p-2 mb-3 card card-ajust card-user">
               <h6>Nome</h6>
               <p>{{ user.user.nome }}</p>
             </div>
 
-             <div class="p-2 mb-3 card card-ajust  card-user">
+            <div class="p-2 mb-3 card card-ajust  card-user">
               <h6>Email</h6>
               <p>{{ user.user.email }}</p>
+            </div>
+
+             <div class="p-2 mb-3 card card-ajust  card-user">
+              <h6>Endereço</h6>
+              <p>{{ user.user.endereco }} / nº {{ user.user.numero }} / CEP: {{ user.user.cep }}</p>
             </div>
 
             <div class="p-2 mb-3 card card-ajust card-user">
@@ -30,55 +32,72 @@
 
             <div class="p-2 mb-3 card card-ajust card-user">
               <h6>Contrato</h6>
-              <p>{{ user.vigente ? user.vigente: "Pendente de aprovação" }} </p>
+              <p>{{ user.vigente ? user.vigente : "Pendente de aprovação" }}</p>
             </div>
- 
+
             <div class="p-2 mb-3 card card-ajust card-user">
               <h6>Mensalidade</h6>
-              <p>R${{ user.mensalidade }} </p>
+              <p>R${{ user.mensalidade }}</p>
             </div>
 
             <div class="p-2 mb-3 card card-ajust card-user">
               <h6>Quantidade de dias ultilizados</h6>
-              <p>{{ user.dias_ultilizados }} </p>
+              <p>{{ user.dias_ultilizados }}</p>
             </div>
 
             <div class="p-2 mb-3 card card-ajust card-user">
               <h6>Dias de viagem</h6>
-              <p>{{ user.dias_viagem }} </p>
+              <p>{{ user.dias_viagem }}</p>
             </div>
 
             <div class="p-2 mb-3 card card-ajust card-user">
               <h6>Administrador aprovação</h6>
-              <p>{{ user.admin_aprovocao ? user.admin_aprovocao: "Pendente de aprovação" }} </p>
+              <p>
+                {{  user.admin_aprovocao ? user.admin_aprovocao : "Pendente de aprovação" }}
+              </p>
             </div>
 
             <div class="p-2 mb-3 card card-ajust card-user">
               <h6>Descrição do contrato</h6>
-              <p>{{ user.descricao }} </p>
+              <p>{{ user.descricao }}</p>
             </div>
           </div>
 
-
-          <div class=" mt-5">
-            <button type="button"  class="btn btn-success btn-block btn_ajuste" >Aprovar contrato</button>
+          <!-- Botões -->
+        <div class="container-button-group">
+          <div class=" m-2 " v-if="user.aprovado === false">
+            <button type="button" class="btn btn-success btn-block btn_ajuste">
+              Aprovar contrato
+            </button>
           </div>
 
-          <div class=" mt-5">
-            <button type="button" class="btn btn-danger  btn-block btn_ajuste" @click="$root.$emit('open-modal-cancelamento')">Cancelar contrato</button>
+          <div class=" m-2" v-if="user.cancelado === true">
+            <button type="button" class="btn btn-success btn-block btn_ajuste">
+              Reativar contrato
+            </button>
           </div>
 
-          <div class=" mt-5">
-            <button type="button" class="btn btn-primary  btn-block btn_ajuste" @click="homeAdmin()">Voltar a home</button>
+          <div class=" m-2">
+            <button
+              type="button"
+              class="btn btn-danger  btn-block btn_ajuste"
+              @click="$root.$emit('open-modal-cancelamento')">
+              Cancelar contrato
+            </button>
+          </div>
+
+          <div class=" m-2">
+            <button
+              type="button"
+              class="btn btn-primary  btn-block btn_ajuste"
+              @click="homeAdmin()">
+              Voltar a home
+            </button>
           </div>
 
           <ModalCancelamento :id_contrato="user.id"></ModalCancelamento>
-
-          
-
-          
+          </div>
         </div>
-       
       </section>
     </main>
 
@@ -106,8 +125,8 @@ export default {
 
   data() {
     return {
-        user: {},
-        user_id: this.$route.params.id,
+      user: {},
+      user_id: this.$route.params.id,
     };
   },
 
@@ -115,13 +134,10 @@ export default {
     ...mapState("auth", ["token"]),
   },
   methods: {
+    checkContrato() {},
 
-    checkContrato(){
-      
-    },
-
-    homeAdmin(){
-      this.$router.push('/admin/Home')
+    homeAdmin() {
+      this.$router.push("/admin/Home");
     },
 
     async getUser() {
@@ -133,9 +149,10 @@ export default {
         },
       };
 
-      console.log("Buscando na api")
+      console.log("Buscando na api");
       return await fetch(
-        `https://api-academic-control-v2.herokuapp.com/contratos/userList/${this.user_id}`, options
+        `https://api-academic-control-v2.herokuapp.com/contratos/userList/${this.user_id}`,
+        options
       )
         .then((res) => res.json())
         .then((res) => {
@@ -144,9 +161,6 @@ export default {
         })
         .catch((erro) => console.log(erro));
     },
-   
-
-
   },
 
   created() {
@@ -157,9 +171,9 @@ export default {
 </script>
 
 <style>
-.card-user:hover{
+.card-user:hover {
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
-  transition: .4s;
+  transition: 0.4s;
 }
 .background-menu {
   background: #262e51;
@@ -171,9 +185,10 @@ export default {
 }
 .container-main {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
 }
 
 .text-ajust {
@@ -192,8 +207,8 @@ export default {
   max-width: 400px;
   max-height: 200px;
 }
-.btn_ajuste{
-  width: 23rem
+.btn_ajuste {
+  width: 25rem;
 }
 
 .imagen-user {
@@ -204,10 +219,17 @@ export default {
   height: 200px;
   overflow: hidden;
   border-radius: 50%;
-  border: 0.5px solid #00C6C2;
+  border: 0.5px solid #00c6c2;
 }
 /* Responsivade*/
 @media (min-width: 999px) {
+  .container-button-group{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 10px
+  }
   .background-menu {
     padding-top: 1%;
     padding-bottom: 1%;
@@ -218,7 +240,14 @@ export default {
     flex-wrap: wrap;
     justify-content: space-between;
   }
-  .card-ajust{
+  .container-main {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .card-ajust {
+    width: 30rem;
+  }
+  .btn_ajuste {
     width: 30rem;
   }
 }
