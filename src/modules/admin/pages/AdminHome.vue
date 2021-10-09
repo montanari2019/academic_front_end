@@ -14,6 +14,11 @@
               Associados pendentes de aprovação
             </button>
           </div>
+          <div class="m-3">
+            <button type="button" class="btn btn-outline-danger position-relative" @click="routeUsersCancelled()">
+              Associados cancelados
+            </button>
+          </div>
         </div>
 
         <div>
@@ -77,6 +82,9 @@ export default {
   methods: {
     routeUsersPendentes(){
       this.$router.push({ name: "UsersPendentes" });
+    },
+    routeUsersCancelled(){
+      this.$router.push({ name: "UsersCancelados" });
     },
     async getUsers() {
       const options = {
