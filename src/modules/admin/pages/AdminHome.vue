@@ -14,35 +14,28 @@
               Associados pendentes de aprovação
             </button>
           </div>
-
-          <div class="m-3">
-            <button type="button" class="btn btn-info position-relative">
-              Contratos vigentes
-            </button>
-          </div>
         </div>
 
         <div>
-          <h2 class="m-3 fw-light text-ajust ">Todos os associados</h2>
+          <h2 class="m-3 fw-light text-ajust ">Todos os associados vigentes: {{ users.length }} </h2>
         </div>
 
-        <div class="container-main card p-3">
-          <div
-            class="card m-3"
+        <div class="container-main card p-3  ">
+          <div class="card m-3 card-user"
             style="width: 30rem;"
-            v-for="(user, id) in users"
+            v-for="(user , id) in users"
             v-bind:key="id"
           >
             <div class="card-body">
               <h5 class="card-title">
-                {{ user.nome}}
+                {{ user.user.nome}}
               </h5>
-              <h6 class="card-subtitle mb-2 text-muted">{{ user.email }}</h6>
+              <h6 class="card-subtitle mb-2 text-muted">{{ user.user.email }}</h6>
               <p class="card-text">
-                {{ user.c_p_f }}
+                {{ user.user.c_p_f }}
               </p>
               <button type="button" class="btn btn-outline-primary">
-                Ver detalhes
+                <router-link :to = "`/listUser/${user.user.id}`" class="router-link">Ver detalhes</router-link>
               </button>
             </div>
           </div>
@@ -71,10 +64,8 @@ export default {
 
   data() {
     return {
-      contratos: [],
       users: [],
-      quantContratosVigentes: [],
-      quantContratosPendentes: "",
+
     };
   },
 
@@ -95,7 +86,7 @@ export default {
 
       // console.log(options)
       return await fetch(
-        `https://api-academic-control-v2.herokuapp.com/users`,
+        `https://api-academic-control-v2.herokuapp.com/contratos/vigentes`,
         options
       )
         .then((res) => res.json())
@@ -105,40 +96,12 @@ export default {
         })
         .catch((erro) => console.log(erro));
     },
-    async getContratos() {
-      const options = {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      };
-
-      // console.log(options)
-      return await fetch(
-        `https://api-academic-control-v2.herokuapp.com/contratos`,
-        options
-      )
-        .then((res) => res.json())
-        .then((res) => {
-          this.contratos = res;
-          console.log(this.contratos);
-        })
-        .catch((erro) => console.log(erro));
-    },
-    contratosVigentes() {
-      this.users.filter((valoratual) => {
-        console.log("Chamei ", valoratual);
-      });
-      console.log(" Contratos ", this.contratos);
-    },
+   
   },
 
   created() {
     this.getUsers();
-    this.getContratos();
-    this.contratosVigentes();
-    // location.reload(true);
+ 
   },
 };
 </script>
@@ -148,6 +111,16 @@ export default {
   background: #262e51;
   padding-top: 3%;
   padding-bottom: 3%;
+}
+.card-user:hover{
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
+  transition: .4s;
+}
+.router-link{
+  text-decoration: none;
+}
+.router-link:hover{
+  color: #fff;
 }
 .button-menu {
   cursor: pointer;
