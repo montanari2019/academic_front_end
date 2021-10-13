@@ -71,7 +71,7 @@
         </div>
         <div class="text-center mt-3">
           <p>Contrato Vigente</p>
-          <h6>{{ contrato.vigente }}</h6>
+          <h6>{{ contrato.vigente === true ? "Status Vigente" : "Pendente de aprovação" }}</h6>
         </div>
       </section>
 

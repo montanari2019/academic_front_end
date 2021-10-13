@@ -42,7 +42,7 @@
 
             <div class="p-2 mb-3 card card-ajust card-user">
               <h6>Contrato</h6>
-              <p>{{ user.vigente ? user.vigente : "Pendente de aprovação" }}</p>
+              <p>{{ user.vigente == true ? "Contrato vigente" : "Pendente de aprovação" }}</p>
             </div>
 
             <div class="p-2 mb-3 card card-ajust card-user">
