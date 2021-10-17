@@ -12,7 +12,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="">
-              Deseja aprovar o contrato do usuário ?
+              Olá {{ name }}
             </h5>
             <button
               type="button"
@@ -25,27 +25,19 @@
           <div class="modal-body">
             <form>
               <div class="mb-3">
-                <div class="modal-body fs-3 fw-lighte">
-                    {{ user_pendente }}
-                </div>
-                
+                Você foi cadastrada com sucesso, em breve teremos mais noticias.
+                Pode agora fazer o login pela primeira vez.
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-danger"
-              @click="visible = false"
-            >
-              Não
-            </button>
+        
             <button
               type="button"
               class="btn btn-success"
-              @click="aprovarUser()"
+              @click="routeHome()"
             >
-              Aprovar contrato
+              Ok
             </button>
           </div>
         </div>
@@ -61,7 +53,7 @@ import "bootstrap/dist/js/bootstrap.js";
 import { mapState } from "vuex";
 
 export default {
-  name: "ModalAprovado",
+  name: "ModalUserCadastro",
   data() {
     return {
       visible: false,
@@ -72,43 +64,18 @@ export default {
      ...mapState("auth", ["user"]),
   },
   props: {
-    id_contrato: {
-      type: Number,
-    },
-    user_pendente: {
-        type: String,
-    }
+    name: {
+      type: String,
+    }, 
+    
   },
   methods: {
-    async aprovarUser() {
-
-       const forms = {
-          admin_aprovocao: this.user.nome
-      }
-       const options = {
-        method: "PUT",
-        body: JSON.stringify(forms),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      };
-
-      console.log("Requisitando na api");
-      return await fetch(
-        `https://api-academic-control-v2.herokuapp.com/contrato/aprovar/${this.id_contrato}`,
-        options
-      )
-        .then((res) => res.json())
-        .then(() => {
-          alert("Associado aprovado")
-          this.$router.push({ name: "UsersPendentes" });
-        })
-        .catch((erro) => console.log(erro));
-    },
+    routeHome(){
+      this.$router.push("/");
+    }
   },
   created() {
-    this.$root.$on("open-modal-aprovado", () => {
+    this.$root.$on("open-modal-user-cadastro", () => {
       this.visible = true;
     });
     // console.log(this.id_contrato);
