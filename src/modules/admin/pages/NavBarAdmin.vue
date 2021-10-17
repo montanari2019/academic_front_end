@@ -27,6 +27,16 @@
                   >
                 </li>
                 <li class="nav-item button-menu">
+                  <a class="nav-link" v-on:click="routeCancelados()"
+                    >Contratos cancelados</a
+                  >
+                </li>
+                <li class="nav-item button-menu">
+                  <a class="nav-link" v-on:click="routePendentes()"
+                    >Contratos pendentes</a
+                  >
+                </li>
+                <li class="nav-item button-menu">
                   <a class="nav-link" v-on:click="homeAdmin()">Home Administrador</a>
                 </li>
                 
@@ -65,6 +75,18 @@ methods:{
     async routeUser() {
       
         this.$router.push({ name: "User" });
+     
+    },
+
+    async routeCancelados() {
+      
+        this.$router.push({ name: "UsersCancelados" });
+     
+    },
+
+    async routePendentes() {
+      
+        this.$router.push({ name: "UsersPendentes" });
      
     },
 

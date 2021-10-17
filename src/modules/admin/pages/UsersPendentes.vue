@@ -4,11 +4,8 @@
 
     <main class="container ">
       <section>
-        <div class="centralizer">
-          <h3 class="mt-3 fw-light text-ajust ">Bem vindo {{ user.nome }}</h3>
-          <div>
-            <img :src="user.foto_url" class="imagen-user" />
-          </div>
+        <div class="mt-5 mb-5">
+          <h1 class="mt-3 fw-normal texto-center">Contratos pendentes de aprovação</h1>
         </div>
 
         <div>
