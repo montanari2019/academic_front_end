@@ -65,14 +65,14 @@
           <p>Nome</p>
           <h6>{{ user.nome }}</h6>
         </div>
-        <div class="text-center mt-3">
+        <!-- <div class="text-center mt-3">
           <p>Email</p>
           <h6>{{ user.email }}</h6>
         </div>
         <div class="text-center mt-3">
           <p>Contrato Vigente</p>
           <h6>{{ contrato.vigente === true ? "Status Vigente" : "Pendente de aprovação" }}</h6>
-        </div>
+        </div> -->
       </section>
 
       <!-- Boletos -->
