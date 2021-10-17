@@ -45,20 +45,10 @@
         <div>
           <!-- <button type="button" class="btn btn-outline-warning btn-sm">Alterar foto</button> -->
           <div class="input-group mb-2">
-            <input
-              type="file"
-              class="form-control"
-              id="inputGroupFile04"
-              aria-describedby="inputGroupFileAddon04"
-              aria-label="Upload"
-            />
-            <button
-              class="btn btn-outline-warning"
-              type="button"
-              id="inputGroupFileAddon04"
-            >
+            <input  type="file" @change="photoUser()" class="form-control margin-remove" />
+            <!-- <button class="btn btn-outline-warning" type="button" @click="photoUser()">
               Upload
-            </button>
+            </button>  -->
           </div>
         </div>
         <div class="text-center mt-3">
@@ -173,6 +163,7 @@ export default {
   computed: {
     ...mapState("auth", ["user"]),
     ...mapState("auth", ["contrato"]),
+    ...mapState("auth", ["token"]),
   },
   methods: {
     ...mapActions("auth", ["ActionLogout"]),
@@ -191,6 +182,53 @@ export default {
       } else {
         alert("Você não é um administrador");
       }
+    },
+
+    async photoUser(){
+
+      console.log("Entrando na função de photo do usuário")
+      
+      const file = event.target.files[0]
+      const fileSizeLimit = 4 * 1024 * 1024 
+
+       console.log("Pegando a foto e o tamanho padraõ")
+       console.log(file);
+
+      const data = new FormData()
+      data.append('file', file)
+
+      console.log(data)
+
+      if(file.size > fileSizeLimit){
+        console.log("FOto maior que 2 mb")
+      }
+      if(file.type !== 'image/png'){
+        console.log("Formato inválido")
+      }
+
+      
+
+      const options = {
+        method: "PUT",
+        body: data,
+        headers: {
+           Authorization: `Bearer ${this.token}`,
+        },
+      };
+
+      console.log(options)
+
+      return await fetch(
+        `https://api-academic-control-v2.herokuapp.com/user/updatePhoto`, options)
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          location.reload(true);
+
+        })
+        .catch((erro) => console.log(erro));
+
+
     },
 
     async homepage() {
@@ -272,6 +310,9 @@ export default {
   font-family: Montserrat;
   font-weight: normal;
   text-align: center;
+}
+.margin-remove{
+  margin: 0;
 }
 
 /* Responsivade*/
