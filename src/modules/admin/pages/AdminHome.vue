@@ -19,6 +19,12 @@
               Associados cancelados
             </button>
           </div>
+
+           <div class="m-3">
+            <button type="button" class="btn btn-success position-relative" @click="loginSicoob()">
+              Login Sicoob
+            </button>
+          </div>
         </div>
 
         <div>
@@ -107,11 +113,31 @@ export default {
         })
         .catch((erro) => console.log(erro));
     },
+    async loginSicoob() {
+       const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      };
+
+      // console.log(options)
+      return await fetch(
+        `http://localhost:3236/auth/sicoob`,
+        options
+      )
+        .then((res) => res.json())
+        // .catch((erro) => alert(erro));
+        .catch((erro) => console.log(erro));
+        
+    } 
    
   },
 
   created() {
     this.getUsers();
+    // console.log("login sicoob");
  
   },
 };
