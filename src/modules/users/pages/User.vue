@@ -39,8 +39,8 @@
     <main>
       <!-- usuário -->
       <section class="container-section">
-        <div>
-          <img :src="user.foto_url" class="imagen-user" />
+        <div @click="$root.$emit('open-modal-user-alteracao')">
+          <img :src="user.foto_url" class="foto-user" />
         </div>
         <div>
           <!-- <button type="button" class="btn btn-outline-warning btn-sm">Alterar foto</button> -->
@@ -135,6 +135,8 @@
       </section>
     </main>
 
+    
+
     <footer class="footer">
       <div>
         <h1 class="title-footer">Associação dos Academicos de Chupinguaia</h1>
@@ -145,6 +147,7 @@
         </div>
       </div>
     </footer>
+    <ModalAlteracao></ModalAlteracao>
   </div>
 </template>
 
@@ -154,11 +157,15 @@ import { mapState } from "vuex";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.js";
 import "font-awesome/css/font-awesome.css";
+import ModalAlteracao from "./ModalUserAlteracao.vue"
 
 export default {
   name: "User",
   data() {
     return {};
+  },
+  components: {
+    ModalAlteracao
   },
   computed: {
     ...mapState("auth", ["user"]),
@@ -280,7 +287,7 @@ export default {
   justify-content: center;
   align-items: center;
 }
-.imagen-user {
+.foto-user {
   margin: 10px;
   margin-top: 10%;
   position: relative;
@@ -288,6 +295,11 @@ export default {
   height: 300px;
   overflow: hidden;
   border-radius: 50%;
+}
+.foto-user:hover{
+    box-shadow: 0px 5px 5px rgb(33, 6, 121);
+    transition: 0.4s;
+    cursor: pointer;
 }
 
 .footer {

@@ -108,7 +108,7 @@ export default {
     },
   },
   created() {
-    this.$root.$on("open-modal-aprovado", () => {
+    this.$root.$on("open-modal-confirm", () => {
       this.visible = true;
     });
     // console.log(this.id_contrato);

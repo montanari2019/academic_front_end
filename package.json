@@ -10,6 +10,7 @@
   "dependencies": {
     "bootstrap": "^5.1.0",
     "core-js": "^3.6.5",
+    "cors": "^2.8.5",
     "font-awesome": "^4.7.0",
     "js-brasil": "^2.4.11",
     "vue": "^2.6.11",
