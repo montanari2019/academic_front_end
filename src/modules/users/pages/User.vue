@@ -39,18 +39,22 @@
     <main>
       <!-- usuário -->
       <section class="container-section">
-        <div @click="$root.$emit('open-modal-user-alteracao')">
+        <div>
           <img :src="user.foto_url" class="foto-user" />
         </div>
         <div>
           <!-- <button type="button" class="btn btn-outline-warning btn-sm">Alterar foto</button> -->
           <div class="input-group mb-2">
             <input  type="file" @change="photoUser()" class="form-control margin-remove" />
-            <!-- <button class="btn btn-outline-warning" type="button" @click="photoUser()">
-              Upload
-            </button>  -->
           </div>
         </div>
+
+        <div @click="$root.$emit('open-modal-user-alteracao')">
+          <button type="button" class="btn btn-warning">Altetrar meus dados</button>
+        </div>
+        <!-- <div>
+          <button @click="segundaVia()" >segunda via</button>
+        </div> -->
         <div class="text-center mt-3">
           <p>Nome</p>
           <h6>{{ user.nome }}</h6>
@@ -66,70 +70,35 @@
       </section>
 
       <!-- Boletos -->
-      <section class="container mt-5 container-boletos">
+      <section v-for="(boleto , id) in boletos" v-bind:key="id" class="container mt-5 container-boletos">
         <div class="card mt-5 boletos-margin">
           <div class="card-header">
             Seu boleto
           </div>
 
           <div class="card-body">
-            <h5 class="card-title">Vencimento: 10/12/2022</h5>
+            <h5 class="card-title">Vencimento: {{ formatDate(boleto.dataVencimento) }}</h5>
             <br />
-            <p class="card-text">Mensalidade: {{ contrato.mensalidade }}</p>
+            <p class="card-text">Mensalidade: {{ formatMoney(boleto.valor) }}</p>
             <p class="card-text">
-              Linha digitável: 00190500954014481606906809350314337370000000100
+              Linha digitável: {{ boleto.linhaDigitavel }}
             </p>
             <p class="card-text">
-              Nosso numero: 123551-2
+              Código de Barras: {{ boleto.codigoBarras }}
             </p>
             <p class="card-text">
-              Situção do bolto: Liquidado
-            </p>
-            <button class="btn btn-primary">Imprimir</button>
-          </div>
-        </div>
-
-        <div class="card mt-5 boletos-margin">
-          <div class="card-header">
-            Seu boleto
-          </div>
-
-          <div class="card-body">
-            <h5 class="card-title">Vencimento: 10/12/2022</h5>
-            <br />
-            <p class="card-text">Mensalidade: {{ contrato.mensalidade }}</p>
-            <p class="card-text">
-              Linha digitável: 00190500954014481606906809350314337370000000100
+              Nosso numero: {{ boleto.nossoNumero }}
             </p>
             <p class="card-text">
-              Nosso numero: 123551-2
+              Situção do boleto: {{ boleto.situacaoBoleto }}
             </p>
-            <p class="card-text">
-              Situção do bolto: Liquidado
+             <p class="card-text">
+              Sacado: {{ boleto.pagador.nome }}
             </p>
-            <button class="btn btn-primary">Imprimir</button>
-          </div>
-        </div>
-
-        <div class="card mt-5 boletos-margin">
-          <div class="card-header">
-            Seu boleto
-          </div>
-
-          <div class="card-body">
-            <h5 class="card-title">Vencimento: 10/12/2022</h5>
-            <br />
-            <p class="card-text">Mensalidade: {{ contrato.mensalidade }}</p>
-            <p class="card-text">
-              Linha digitável: 00190500954014481606906809350314337370000000100
+             <p class="card-text">
+              Cpf Sacado: {{ boleto.pagador.numeroCpfCnpj }}
             </p>
-            <p class="card-text">
-              Nosso numero: 123551-2
-            </p>
-            <p class="card-text">
-              Situção do bolto: Liquidado
-            </p>
-            <button class="btn btn-primary">Imprimir</button>
+            <!-- <button class="btn btn-primary">Imprimir</button> -->
           </div>
         </div>
       </section>
@@ -162,7 +131,9 @@ import ModalAlteracao from "./ModalUserAlteracao.vue"
 export default {
   name: "User",
   data() {
-    return {};
+    return {
+      boletos: '',
+    };
   },
   components: {
     ModalAlteracao
@@ -238,6 +209,58 @@ export default {
 
     },
 
+    async segundaVia(){
+      console.log("async segunda via")
+       const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+           "Access-Control-Allow-Origin": "*",
+          'Access-Control-Allow-Methods' : 'GET, PUT, POST, DELETE, OPTIONS',
+          'Access-Control-Allow-Credentials' : true,
+        },
+       }
+
+         // console.log(options)
+      return await fetch(`https://api-academic-control-v2.herokuapp.com/segundaVia`,
+        options
+      )
+        .then((res) => res.json())
+        // .catch((erro) => alert(erro));
+        .catch((erro) => console.log(erro));
+        
+    },
+    formatMoney(value){
+      return `R$ ${value.toLocaleString("pt-BR", { maximumFractionDigits: 2, minimumFractionDigits: 2 })}` 
+    },
+    formatDate(value){
+      return new Date(value).toLocaleDateString()
+    },
+    async consultaBoleto(){
+      console.log("Função de consultar boleto")
+       const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+           "Access-Control-Allow-Origin": "*",
+          'Access-Control-Allow-Methods' : 'GET, PUT, POST, DELETE, OPTIONS',
+          'Access-Control-Allow-Credentials' : true,
+        },
+       }
+
+         // console.log(options)
+      return await fetch(`https://api-academic-control-v2.herokuapp.com/listarBoletoPagador`,
+        options
+      )
+        .then((res) => res.json())
+        .then((res) => this.boletos = res.resultado)
+        .then((res) => console.log(res))
+        
+        .catch((erro) => console.log(erro));
+    },
+
     async homepage() {
       this.$router.push({ name: "Home" });
     },
@@ -262,6 +285,7 @@ export default {
   },
   created() {
     this.getContrato();
+    this.consultaBoleto()
     // location.reload(true);
   },
 };

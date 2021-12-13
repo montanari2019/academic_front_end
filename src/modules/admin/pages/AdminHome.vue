@@ -21,9 +21,9 @@
           </div>
 
            <div class="m-3">
-            <button type="button" class="btn btn-success position-relative" @click="loginSicoob()">
+            <a type="button" class="btn btn-success position-relative" href="https://api-academic-control-v2.herokuapp.com/auth/sicoob">
               Login Sicoob
-            </button>
+            </a>
           </div>
         </div>
 
@@ -93,6 +93,7 @@ export default {
       this.$router.push({ name: "UsersCancelados" });
     },
     async getUsers() {
+
       const options = {
         method: "GET",
         headers: {
@@ -113,34 +114,13 @@ export default {
         })
         .catch((erro) => console.log(erro));
     },
-    async loginSicoob() {
-       const options = {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      };
-
-      // console.log(options)
-      return await fetch(
-        `http://localhost:3236/auth/sicoob`,
-        options
-      )
-        .then((res) => res.json())
-        // .catch((erro) => alert(erro));
-        .catch((erro) => console.log(erro));
-        
-    } 
-   
   },
-
   created() {
+     
     this.getUsers();
     // console.log("login sicoob");
- 
-  },
-};
+  }
+}
 </script>
 
 <style>
