@@ -285,7 +285,7 @@ export default {
   },
   created() {
     this.getContrato();
-    this.consultaBoleto()
+    this.consultaBoleto();
     // location.reload(true);
   },
 };

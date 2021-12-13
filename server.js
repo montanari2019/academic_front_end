@@ -1,11 +1,15 @@
-var express = require('express')
-
-var path = require('path')
-var serveStatic = require('serve-static')
+const express = require('express')
+const serveStatic = require('serve-static')
+const path = require('path')
 
 const app = express()
 
+//here we are configuring dist to serve app files
 app.use(serveStatic(path.join(__dirname, 'dist')))
 
-const port =  8080 || port
-app.listen(port)
+
+// eslint-disable-next-line no-undef
+const porta = 8080 || port
+app.listen(porta)
+
+console.log("Server start: " + porta)
