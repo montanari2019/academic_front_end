@@ -9,7 +9,7 @@ app.use(serveStatic(path.join(__dirname, 'dist')))
 
 
 // eslint-disable-next-line no-undef
-const porta = 8080 || port
+const porta = process.env.PORT || port
 app.listen(porta)
 
 console.log("Server start: " + porta)
