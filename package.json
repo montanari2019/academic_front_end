@@ -13,9 +13,15 @@
   "dependencies": {
     "bootstrap": "^5.1.0",
     "core-js": "^3.6.5",
+<<<<<<< HEAD
     "express": "^4.17.1",
+=======
+    "cors": "^2.8.5",
+>>>>>>> 8a568e8b880e033f55dcf50d2d40f924ff22aedb
     "font-awesome": "^4.7.0",
+    "js-brasil": "^2.4.11",
     "vue": "^2.6.11",
+    "vue-brazil": "^0.1.1",
     "vue-resource": "^1.5.3",
     "vue-router": "^3.5.2",
     "vuex": "^3.6.2"

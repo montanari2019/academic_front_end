@@ -40,110 +40,71 @@
       <!-- usuário -->
       <section class="container-section">
         <div>
-          <img :src="user.foto_url" class="imagen-user" />
+          <img :src="user.foto_url" class="foto-user" />
         </div>
         <div>
           <!-- <button type="button" class="btn btn-outline-warning btn-sm">Alterar foto</button> -->
           <div class="input-group mb-2">
-            <input
-              type="file"
-              class="form-control"
-              id="inputGroupFile04"
-              aria-describedby="inputGroupFileAddon04"
-              aria-label="Upload"
-            />
-            <button
-              class="btn btn-outline-warning"
-              type="button"
-              id="inputGroupFileAddon04"
-            >
-              Upload
-            </button>
+            <input  type="file" @change="photoUser()" class="form-control margin-remove" />
           </div>
         </div>
+
+        <div @click="$root.$emit('open-modal-user-alteracao')">
+          <button type="button" class="btn btn-warning">Altetrar meus dados</button>
+        </div>
+        <!-- <div>
+          <button @click="segundaVia()" >segunda via</button>
+        </div> -->
         <div class="text-center mt-3">
           <p>Nome</p>
           <h6>{{ user.nome }}</h6>
         </div>
-        <div class="text-center mt-3">
+        <!-- <div class="text-center mt-3">
           <p>Email</p>
           <h6>{{ user.email }}</h6>
         </div>
         <div class="text-center mt-3">
           <p>Contrato Vigente</p>
-          <h6>{{ contrato.vigente }}</h6>
-        </div>
+          <h6>{{ contrato.vigente === true ? "Status Vigente" : "Pendente de aprovação" }}</h6>
+        </div> -->
       </section>
 
       <!-- Boletos -->
-      <section class="container mt-5 container-boletos">
+      <section v-for="(boleto , id) in boletos" v-bind:key="id" class="container mt-5 container-boletos">
         <div class="card mt-5 boletos-margin">
           <div class="card-header">
             Seu boleto
           </div>
 
           <div class="card-body">
-            <h5 class="card-title">Vencimento: 10/12/2022</h5>
+            <h5 class="card-title">Vencimento: {{ formatDate(boleto.dataVencimento) }}</h5>
             <br />
-            <p class="card-text">Mensalidade: {{ contrato.mensalidade }}</p>
+            <p class="card-text">Mensalidade: {{ formatMoney(boleto.valor) }}</p>
             <p class="card-text">
-              Linha digitável: 00190500954014481606906809350314337370000000100
+              Linha digitável: {{ boleto.linhaDigitavel }}
             </p>
             <p class="card-text">
-              Nosso numero: 123551-2
+              Código de Barras: {{ boleto.codigoBarras }}
             </p>
             <p class="card-text">
-              Situção do bolto: Liquidado
-            </p>
-            <button class="btn btn-primary">Imprimir</button>
-          </div>
-        </div>
-
-        <div class="card mt-5 boletos-margin">
-          <div class="card-header">
-            Seu boleto
-          </div>
-
-          <div class="card-body">
-            <h5 class="card-title">Vencimento: 10/12/2022</h5>
-            <br />
-            <p class="card-text">Mensalidade: {{ contrato.mensalidade }}</p>
-            <p class="card-text">
-              Linha digitável: 00190500954014481606906809350314337370000000100
+              Nosso numero: {{ boleto.nossoNumero }}
             </p>
             <p class="card-text">
-              Nosso numero: 123551-2
+              Situção do boleto: {{ boleto.situacaoBoleto }}
             </p>
-            <p class="card-text">
-              Situção do bolto: Liquidado
+             <p class="card-text">
+              Sacado: {{ boleto.pagador.nome }}
             </p>
-            <button class="btn btn-primary">Imprimir</button>
-          </div>
-        </div>
-
-        <div class="card mt-5 boletos-margin">
-          <div class="card-header">
-            Seu boleto
-          </div>
-
-          <div class="card-body">
-            <h5 class="card-title">Vencimento: 10/12/2022</h5>
-            <br />
-            <p class="card-text">Mensalidade: {{ contrato.mensalidade }}</p>
-            <p class="card-text">
-              Linha digitável: 00190500954014481606906809350314337370000000100
+             <p class="card-text">
+              Cpf Sacado: {{ boleto.pagador.numeroCpfCnpj }}
             </p>
-            <p class="card-text">
-              Nosso numero: 123551-2
-            </p>
-            <p class="card-text">
-              Situção do bolto: Liquidado
-            </p>
-            <button class="btn btn-primary">Imprimir</button>
+            <!-- <button class="btn btn-primary">Imprimir</button> -->
           </div>
         </div>
       </section>
     </main>
+
+    
 
     <footer class="footer">
       <div>
@@ -155,6 +116,7 @@
         </div>
       </div>
     </footer>
+    <ModalAlteracao></ModalAlteracao>
   </div>
 </template>
 
@@ -164,15 +126,22 @@ import { mapState } from "vuex";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.js";
 import "font-awesome/css/font-awesome.css";
+import ModalAlteracao from "./ModalUserAlteracao.vue"
 
 export default {
   name: "User",
   data() {
-    return {};
+    return {
+      boletos: '',
+    };
+  },
+  components: {
+    ModalAlteracao
   },
   computed: {
     ...mapState("auth", ["user"]),
     ...mapState("auth", ["contrato"]),
+    ...mapState("auth", ["token"]),
   },
   methods: {
     ...mapActions("auth", ["ActionLogout"]),
@@ -191,6 +160,105 @@ export default {
       } else {
         alert("Você não é um administrador");
       }
+    },
+
+    async photoUser(){
+
+      console.log("Entrando na função de photo do usuário")
+      
+      const file = event.target.files[0]
+      const fileSizeLimit = 4 * 1024 * 1024 
+
+       console.log("Pegando a foto e o tamanho padraõ")
+       console.log(file);
+
+      const data = new FormData()
+      data.append('file', file)
+
+      console.log(data)
+
+      if(file.size > fileSizeLimit){
+        console.log("FOto maior que 2 mb")
+      }
+      if(file.type !== 'image/png'){
+        console.log("Formato inválido")
+      }
+
+      
+
+      const options = {
+        method: "PUT",
+        body: data,
+        headers: {
+           Authorization: `Bearer ${this.token}`,
+        },
+      };
+
+      console.log(options)
+
+      return await fetch(
+        `https://api-academic-control-v2.herokuapp.com/user/updatePhoto`, options)
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          location.reload(true);
+
+        })
+        .catch((erro) => console.log(erro));
+
+
+    },
+
+    async segundaVia(){
+      console.log("async segunda via")
+       const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+           "Access-Control-Allow-Origin": "*",
+          'Access-Control-Allow-Methods' : 'GET, PUT, POST, DELETE, OPTIONS',
+          'Access-Control-Allow-Credentials' : true,
+        },
+       }
+
+         // console.log(options)
+      return await fetch(`https://api-academic-control-v2.herokuapp.com/segundaVia`,
+        options
+      )
+        .then((res) => res.json())
+        // .catch((erro) => alert(erro));
+        .catch((erro) => console.log(erro));
+        
+    },
+    formatMoney(value){
+      return `R$ ${value.toLocaleString("pt-BR", { maximumFractionDigits: 2, minimumFractionDigits: 2 })}` 
+    },
+    formatDate(value){
+      return new Date(value).toLocaleDateString()
+    },
+    async consultaBoleto(){
+      console.log("Função de consultar boleto")
+       const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+           "Access-Control-Allow-Origin": "*",
+          'Access-Control-Allow-Methods' : 'GET, PUT, POST, DELETE, OPTIONS',
+          'Access-Control-Allow-Credentials' : true,
+        },
+       }
+
+         // console.log(options)
+      return await fetch(`https://api-academic-control-v2.herokuapp.com/listarBoletoPagador`,
+        options
+      )
+        .then((res) => res.json())
+        .then((res) => this.boletos = res.resultado)
+        .then((res) => console.log(res))
+        
+        .catch((erro) => console.log(erro));
     },
 
     async homepage() {
@@ -217,6 +285,7 @@ export default {
   },
   created() {
     this.getContrato();
+    this.consultaBoleto()
     // location.reload(true);
   },
 };
@@ -242,7 +311,7 @@ export default {
   justify-content: center;
   align-items: center;
 }
-.imagen-user {
+.foto-user {
   margin: 10px;
   margin-top: 10%;
   position: relative;
@@ -250,6 +319,11 @@ export default {
   height: 300px;
   overflow: hidden;
   border-radius: 50%;
+}
+.foto-user:hover{
+    box-shadow: 0px 5px 5px rgb(33, 6, 121);
+    transition: 0.4s;
+    cursor: pointer;
 }
 
 .footer {
@@ -272,6 +346,9 @@ export default {
   font-family: Montserrat;
   font-weight: normal;
   text-align: center;
+}
+.margin-remove{
+  margin: 0;
 }
 
 /* Responsivade*/

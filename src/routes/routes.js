@@ -55,6 +55,20 @@ const router = new VueRouter({
             component: () => import('../modules/admin/pages/AnaliseUser'),
             // a meta field
             meta: { requiresAuth: true }
+        },
+        {
+            name: 'UsersPendentes',
+            path: '/user/pendentes',
+            component: () => import('../modules/admin/pages/UsersPendentes'),
+            // a meta field
+            meta: { requiresAuth: true }
+        },
+        {
+            name: 'UsersCancelados',
+            path: '/user/cancelados',
+            component: () => import('../modules/admin/pages/UsersCancelados'),
+            // a meta field
+            meta: { requiresAuth: true }
         }
     ],
 })

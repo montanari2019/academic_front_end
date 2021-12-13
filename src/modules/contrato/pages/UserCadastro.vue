@@ -185,6 +185,8 @@
       </form>
     </section>
 
+    <Modal :name="this.nome"></Modal>
+
     <Footer></Footer>
   </div>
 </template>
@@ -193,12 +195,15 @@
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.js";
 import Footer from "../../../components/Footer.vue";
+import Modal from "../pages/ModalUserCadastro.vue";
+
 
 export default {
   name: "UserCadastro",
   components: {
     // eslint-disable-next-line vue/no-unused-components
     Footer,
+    Modal
   },
   data() {
     return {
@@ -280,8 +285,7 @@ export default {
         return await fetch(`https://api-academic-control-v2.herokuapp.com/userStore`, options)
           .then((res) => res.json())
           .then(() => {
-            alert("Seu cadastro foi efetuado com sucesso, agora você ja pode fazer login e conhecer mais")
-            this.routeHome();
+            this.$root.$emit('open-modal-user-cadastro')
           })
           .catch((erro) => console.log(erro));
       }

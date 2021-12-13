@@ -20,6 +20,16 @@
               <p>{{ user.user.email }}</p>
             </div>
 
+            <div class="p-2 mb-3 card card-ajust  card-user">
+              <h6>RG</h6>
+              <p>{{ user.user.r_g }}</p>
+            </div>
+
+            <div class="p-2 mb-3 card card-ajust  card-user">
+              <h6>CPF</h6>
+              <p> {{ user.user.c_p_f }}</p>
+            </div>
+
              <div class="p-2 mb-3 card card-ajust  card-user">
               <h6>Endereço</h6>
               <p>{{ user.user.endereco }} / nº {{ user.user.numero }} / CEP: {{ user.user.cep }}</p>
@@ -32,12 +42,12 @@
 
             <div class="p-2 mb-3 card card-ajust card-user">
               <h6>Contrato</h6>
-              <p>{{ user.vigente ? user.vigente : "Pendente de aprovação" }}</p>
+              <p>{{ user.vigente == true ? "Contrato vigente" : "Pendente de aprovação" }}</p>
             </div>
 
             <div class="p-2 mb-3 card card-ajust card-user">
               <h6>Mensalidade</h6>
-              <p>R${{ user.mensalidade }}</p>
+              <p>R$ {{ user.mensalidade }}</p>
             </div>
 
             <div class="p-2 mb-3 card card-ajust card-user">
@@ -66,7 +76,7 @@
           <!-- Botões -->
         <div class="container-button-group">
           <div class=" m-2 " v-if="user.aprovado === false">
-            <button type="button" class="btn btn-success btn-block btn_ajuste">
+            <button type="button" class="btn btn-success btn-block btn_ajuste"  @click="$root.$emit('open-modal-aprovado')"  >
               Aprovar contrato
             </button>
           </div>
@@ -89,13 +99,24 @@
           <div class=" m-2">
             <button
               type="button"
+              class="btn btn btn-info  btn-block btn_ajuste"
+              @click="$root.$emit('open-modal-email')">
+              Enviar email
+            </button>
+          </div>
+
+          <!-- <div class=" m-2">
+            <button
+              type="button"
               class="btn btn-primary  btn-block btn_ajuste"
               @click="homeAdmin()">
               Voltar a home
             </button>
-          </div>
+          </div> -->
 
           <ModalCancelamento :id_contrato="user.id"></ModalCancelamento>
+          <ModalEmail :nomeAssociado="user.user.nome" :email="user.user.email"></ModalEmail>
+          <ModalAprovado :user_pendente="user.user.nome" :id_contrato="user.id"></ModalAprovado>
           </div>
         </div>
       </section>
@@ -112,6 +133,8 @@ import { mapState } from "vuex";
 import Footer from "../../../components/Footer.vue";
 import NavBarAdmin from "../pages/NavBarAdmin.vue";
 import ModalCancelamento from "../pages/ModalCancelamento.vue";
+import ModalAprovado from "../pages/ModalAprovado.vue";
+import ModalEmail from "../pages/ModalEnviarEmail.vue";
 
 export default {
   name: "AnaliseUser",
@@ -121,20 +144,24 @@ export default {
     NavBarAdmin,
     // eslint-disable-next-line vue/no-unused-components
     ModalCancelamento,
+    ModalAprovado,
+    ModalEmail
   },
 
   data() {
     return {
       user: {},
       user_id: this.$route.params.id,
+
     };
   },
 
   computed: {
     ...mapState("auth", ["token"]),
+   
   },
   methods: {
-    checkContrato() {},
+    
 
     homeAdmin() {
       this.$router.push("/admin/Home");
@@ -165,7 +192,6 @@ export default {
 
   created() {
     this.getUser();
-    this.checkContrato();
   },
 };
 </script>

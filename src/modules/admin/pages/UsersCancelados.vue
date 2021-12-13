@@ -4,49 +4,41 @@
 
     <main class="container ">
       <section>
-        <div class="centralizer">
-          <h3 class="mt-3 fw-light text-ajust ">Bem vindo administrador {{ user.nome }}</h3>
-          <div>
-            <img :src="user.foto_url" class="imagen-user" />
-          </div>
-          <div class="m-3">
-            <button type="button" class="btn btn-warning  position-relative" @click="routeUsersPendentes()">
-              Associados pendentes de aprovação
-            </button>
-          </div>
-          <div class="m-3">
-            <button type="button" class="btn btn-outline-danger position-relative" @click="routeUsersCancelled()">
-              Associados cancelados
-            </button>
-          </div>
-
-           <div class="m-3">
-            <a type="button" class="btn btn-success position-relative" href="https://api-academic-control-v2.herokuapp.com/auth/sicoob">
-              Login Sicoob
-            </a>
-          </div>
+        <div class="mt-5 mb-5">
+          <h1 class="mt-3 fw-normal texto-center">Contratos cancelados</h1>
         </div>
 
+        
+
         <div>
-          <h2 class="m-3 fw-light text-ajust ">Todos os associados vigentes: {{ users.length }} </h2>
+          <h2 class="m-3 fw-light text-ajust ">
+            Todos os associados cancelados: {{ users.length }}
+          </h2>
         </div>
 
         <div class="container-main card p-3  ">
-          <div class="card m-3 card-user"
+          <div
+            class="card m-3 card-user"
             style="width: 30rem;"
-            v-for="(user , id) in users"
+            v-for="(user, id) in users"
             v-bind:key="id"
           >
             <div class="card-body">
               <h5 class="card-title">
-                {{ user.user.nome}}
+                {{ user.user.nome }}
               </h5>
-              <h6 class="card-subtitle mb-2 text-muted">{{ user.user.email }}</h6>
+              <h6 class="card-subtitle mb-2 text-muted">
+                {{ user.user.email }}
+              </h6>
               <p class="card-text">
                 {{ user.user.c_p_f }}
               </p>
-              <button type="button" class="btn btn-info">
-                <router-link :to = "`/listUser/${user.user.id}`" class="router-link">Ver detalhes</router-link>
+              <button type="button" class="btn btn-danger">
+                <router-link
+                  :to="`/listUser/${user.user.id}`"
+                  class="router-link"
+                  >Ver detalhes</router-link
+                >
               </button>
             </div>
           </div>
@@ -63,10 +55,10 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.js";
 import { mapState } from "vuex";
 import Footer from "../../../components/Footer.vue";
-import NavBarAdmin from "../pages/NavBarAdmin.vue";
+import NavBarAdmin from "./NavBarAdmin.vue";
 
 export default {
-  name: "AdminHome",
+  name: "UsersCancelados",
   components: {
     // eslint-disable-next-line vue/no-unused-components
     Footer,
@@ -76,24 +68,15 @@ export default {
   data() {
     return {
       users: [],
-
     };
   },
 
   computed: {
     ...mapState("auth", ["user"]),
-    ...mapState("auth", ["contrato"]),
     ...mapState("auth", ["token"]),
   },
   methods: {
-    routeUsersPendentes(){
-      this.$router.push({ name: "UsersPendentes" });
-    },
-    routeUsersCancelled(){
-      this.$router.push({ name: "UsersCancelados" });
-    },
     async getUsers() {
-
       const options = {
         method: "GET",
         headers: {
@@ -104,7 +87,7 @@ export default {
 
       // console.log(options)
       return await fetch(
-        `https://api-academic-control-v2.herokuapp.com/contratos/vigentes`,
+        `https://api-academic-control-v2.herokuapp.com/contratos/cancelados`,
         options
       )
         .then((res) => res.json())
@@ -115,12 +98,11 @@ export default {
         .catch((erro) => console.log(erro));
     },
   },
+
   created() {
-     
     this.getUsers();
-    // console.log("login sicoob");
-  }
-}
+  },
+};
 </script>
 
 <style>
@@ -129,15 +111,16 @@ export default {
   padding-top: 3%;
   padding-bottom: 3%;
 }
-.card-user:hover{
-  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
-  transition: .4s;
+.card-user:hover {
+  box-shadow: 0px 5px 5px rgba(255, 0, 0, 0.25);
+  transition: 0.4s;
 }
-.router-link{
+.router-link {
   text-decoration: none;
+  color: floralwhite;
 }
-.router-link:hover{
-  color: #fff;
+.router-link:hover {
+  color: black;
 }
 .button-menu {
   cursor: pointer;
@@ -180,8 +163,14 @@ export default {
   overflow: hidden;
   border-radius: 50%;
 }
+.texto-center {
+    text-align: center;
+  }
 /* Responsivade*/
 @media (min-width: 999px) {
+  .texto-center {
+    text-align: left;
+  }
   .background-menu {
     padding-top: 1%;
     padding-bottom: 1%;
