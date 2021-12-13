@@ -15,7 +15,7 @@
             >
               <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand" href="#">ACADEMICOS DE CHUPINGUAIA</a>
+            <a class="navbar-brand fs-6" href="#">ACADEMICOS DE CHUPINGUAIA</a>
             <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item button-menu">
