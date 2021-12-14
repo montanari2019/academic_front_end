@@ -87,7 +87,7 @@
             </button>
           </div>
 
-          <div class=" m-2">
+          <div class=" m-1">
             <button
               type="button"
               class="btn btn-danger  btn-block btn_ajuste"
@@ -96,12 +96,21 @@
             </button>
           </div>
 
-          <div class=" m-2">
+          <div class=" m-1">
             <button
               type="button"
-              class="btn btn btn-info  btn-block btn_ajuste"
+              class="btn btn btn-info btn_ajuste"
               @click="$root.$emit('open-modal-email')">
               Enviar email
+            </button>
+          </div>
+
+          <div class=" m-1">
+            <button
+              type="button"
+              class="btn btn btn-dark btn_ajuste"
+              @click="$root.$emit('open-modal-emitirBoleto')">
+              Emitir Boleto
             </button>
           </div>
 
@@ -117,6 +126,7 @@
           <ModalCancelamento :id_contrato="user.id"></ModalCancelamento>
           <ModalEmail :nomeAssociado="user.user.nome" :email="user.user.email"></ModalEmail>
           <ModalAprovado :user_pendente="user.user.nome" :id_contrato="user.id"></ModalAprovado>
+          <ModalEmitirBoleto :nomesacado="user.user.nome" :cpfSacado="user.user.c_p_f" :emailSacado="user.user.email" :user='user'></ModalEmitirBoleto>
           </div>
         </div>
       </section>
@@ -135,17 +145,17 @@ import NavBarAdmin from "../pages/NavBarAdmin.vue";
 import ModalCancelamento from "../pages/ModalCancelamento.vue";
 import ModalAprovado from "../pages/ModalAprovado.vue";
 import ModalEmail from "../pages/ModalEnviarEmail.vue";
+import ModalEmitirBoleto from "../pages/ModalEmitirBoleto.vue"
 
 export default {
   name: "AnaliseUser",
   components: {
-    // eslint-disable-next-line vue/no-unused-components
     Footer,
     NavBarAdmin,
-    // eslint-disable-next-line vue/no-unused-components
     ModalCancelamento,
     ModalAprovado,
-    ModalEmail
+    ModalEmail,
+    ModalEmitirBoleto
   },
 
   data() {

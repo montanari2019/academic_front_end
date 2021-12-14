@@ -28,7 +28,7 @@
     <main class="container-main">
  
 <!-- Presidente section -->
-      <section >
+      <section class="d">
         <!-- dona rosana -->
         <div class="">
           <img class="foto-elipse" src="https://controledeacademicos.s3.amazonaws.com/2108a074326fcfe8ffbe2c63b0668ae7-foto-da-rosana.jpg" alt="" srcset="">
@@ -272,10 +272,11 @@ export default {
 }
 
 .foto-elipse{
-  max-width: 400px;
-  max-height: 400px;
+  max-width: 350px;
+  max-height: 350px;
   border-radius: 50%;
-  margin: 1%
+  margin: 1%;
+
 }
 
 .title-foto{
