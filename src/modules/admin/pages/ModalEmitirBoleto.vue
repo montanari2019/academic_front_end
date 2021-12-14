@@ -308,7 +308,7 @@ export default {
       console.log(options)
 
       return await fetch(
-        `http://localhost:3236/emitirBoleto`, options)
+        `https://api-academic-control-v2.herokuapp.com/emitirBoleto`, options)
         .then((res) => res.json())
         .then((res) => {
           console.log(res);
