@@ -1,4 +1,4 @@
-# projetosimples
+# Academica Control Front-End
 
 ## Project setup
 ```
